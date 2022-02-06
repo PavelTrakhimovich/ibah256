@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Map</title>
+      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+   </head>
+   <body>
+      <div id = "map" style = "width: 1500px; height: 800px"></div>
+      <script>
+         var mapOptions = {
+            center: [53.90640755002609, 27.534995778181575],
+            zoom: 10
+         }         
+         var map = new L.map('map', mapOptions);        
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         map.on('click', function(e){
+         var coord = e.latlng;
+         var lat = coord.lat;
+         var lng = coord.lng;       
+         $.ajax({
+            method: 'GET',
+            url: "http://127.0.0.1:8000/save_coordinates",
+            data: {"lat": lat, "lng": lng},
+            success: function (response) {
+                if(response["valid"]){
+                    console.log(lat, lng);
+                }
+                else{
+                    console.log("Error")
+                }
+            }
+        })
+    })
+    map.addLayer(layer);
+    </script>
+   </body>
+   
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  console.log(lat, lng);
+    //  });
+//      $.ajax({
+//     method: "GET",
+//     url: "http://127.0.0.1:8000",
+//     data: {'lat': lat, 'lng': lng},
+//     dataType: "text",
+//     cache: false,
+//     success: function(data) {
+//     loadComments(data)
+//   }
+// })
